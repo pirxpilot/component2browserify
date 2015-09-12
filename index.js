@@ -35,15 +35,17 @@ var package = {
   package[p] = component[p];
 });
 
-package.name = component.repo.split('/', 2).join('-');
+if (component.repo) {
+  package.name = component.repo.split('/', 2).join('-');
+  package.repository.url = package.repository.url.replace('${org_name}', component.repo);
+  package.bugs.url = package.bugs.url.replace('${org_name}', component.repo);
+} else {
+  package.name = component.name;
+}
 
 if (component.keywords) {
   Array.prototype.push.apply(package.keywords, component.keywords);
 }
-
-package.repository.url = package.repository.url.replace('${org_name}', component.repo);
-package.bugs.url = package.bugs.url.replace('${org_name}', component.repo);
-
 
 if (component.dependencies) {
   Object.keys(component.dependencies).forEach(function(dep) {
@@ -58,4 +60,3 @@ if (component.dependencies) {
 }
 
 fs.writeFileSync('package.json', JSON.stringify(package, null, 2));
-
