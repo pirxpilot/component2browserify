@@ -6,6 +6,7 @@ var component = JSON.parse(fs.readFileSync('./component.json'));
 
 var package = {
   "name": "",
+  "private": true,
   "version": "",
   "description": "",
   "scripts": {
@@ -39,8 +40,11 @@ if (component.repo) {
   package.name = component.repo.split('/', 2).join('-');
   package.repository.url = package.repository.url.replace('${org_name}', component.repo);
   package.bugs.url = package.bugs.url.replace('${org_name}', component.repo);
+  delete package.private;
 } else {
   package.name = component.name;
+  delete package.repository;
+  delete package.bugs;
 }
 
 if (component.keywords) {
@@ -51,10 +55,15 @@ if (component.dependencies) {
   Object.keys(component.dependencies).forEach(function(dep) {
     var npmdep = dep.split('/');
     var browserdep = npmdep[1];
+    var version = component.dependencies[dep];
+
+    if (version[0] !== '*') {
+      version = '^' + version;
+    }
 
     npmdep = npmdep.join('-');
 
-    package.dependencies[npmdep] = '^' + component.dependencies[dep];
+    package.dependencies[npmdep] = version;
     package.browser[browserdep] = npmdep;
   });
 }
