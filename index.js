@@ -4,6 +4,14 @@ var fs = require('fs');
 
 var component = JSON.parse(fs.readFileSync('./component.json'));
 
+var component_versions = {};
+
+try {
+  component_versions = JSON.parse(fs.readFileSync('./component-shrinkwrap.json')).dependencies;
+} catch(e) {
+}
+
+
 var package = {
   "name": "",
   "private": true,
@@ -55,7 +63,7 @@ if (component.dependencies) {
   Object.keys(component.dependencies).forEach(function(dep) {
     var npmdep = dep.split('/');
     var browserdep = npmdep[1];
-    var version = component.dependencies[dep];
+    var version = component_versions[dep] || component.dependencies[dep];
 
     if (version[0] !== '*') {
       version = '^' + version;
