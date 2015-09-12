@@ -1,0 +1,27 @@
+{
+  "name": "component2package",
+  "version": "0.0.0",
+  "description": "Convert component.json to package.json",
+  "author": {
+    "name": "Damian Krzeminski",
+    "email": "pirxpilot@code42day.com",
+    "url": "https://code42day.com"
+  },
+  "repository": "pirxpilot/component2package",
+  "license": "MIT",
+  "keywords": [
+    "component",
+    "browserify",
+    "package.json"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "jshint": "^2.8.0"
+  },
+  "bin" : {
+    "component2package": "./index.js"
+  },
+  "scripts": {
+    "test": "make check"
+  }
+}
