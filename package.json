@@ -1,6 +1,6 @@
 {
   "name": "component2package",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Convert component.json to package.json",
   "author": {
     "name": "Damian Krzeminski",
@@ -18,10 +18,13 @@
   "devDependencies": {
     "jshint": "^2.8.0"
   },
-  "bin" : {
+  "bin": {
     "component2package": "./index.js"
   },
   "scripts": {
     "test": "make check"
-  }
+  },
+  "files": [
+    "index.js"
+  ]
 }
